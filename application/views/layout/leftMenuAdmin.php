@@ -318,21 +318,11 @@ function checkPermission($session_data) {
                     <ul class="treeview-menu">
                         <!--Admin Access-->
                         <li>
-                            <a href="<?php echo base_url(); ?>index.php/Configuration/add_sliders">
-                                <i class="active fa fa-plus "></i> <span>Add Sliders</span>
+                            <a href="<?php echo site_url("CMS/siteSEOConfigUpdate"); ?>">
+                                <i class="active fa fa-plus "></i> <span>Site SEO Settings</span>
                             </a>
                         </li> 
-                        <!--                        <li>
-                                                    <a href="<?php echo base_url(); ?>index.php/Configuration/add_barcode">
-                                                        <i class="active fa fa-plus "></i> <span>Add Barcodes</span>
-                                                    </a>
-                                                </li> -->
-                        <!--                        <li>
-                                                    <a href="<?php echo base_url(); ?>index.php/UserManager/usersReport">
-                                                        <i class="active fa fa-plus "></i> <span>Users Reports</span>
-                                                    </a>
-                                                </li>   -->
-                        <!--end of admin access-->
+                     
                     </ul>
                 </li>
 

@@ -24,6 +24,9 @@
         <script src="<?php echo base_url(); ?>assets_main/dist/js/angular.min.js"></script>
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets_main/dist/css/customstyle.css">
+<!-- jQuery 3 -->
+<script src="<?php echo base_url(); ?>assets_main/jquery/jquery-1.9.1.min.js"></script>
+
 
         <!-- Google Font -->
         <link rel="stylesheet"

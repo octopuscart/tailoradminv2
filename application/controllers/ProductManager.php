@@ -565,10 +565,10 @@ class ProductManager extends CI_Controller {
             $this->db->set('stock_status', $this->input->post('stock_status'));
             $this->db->set('keywords', $this->input->post('keywords'));
             $this->db->set('video_link', $this->input->post('video_link'));
-            
-            $this->db->set('is_sale', $this->input->post('is_sale')=="on"?"true":"false");
-            $this->db->set('is_new', $this->input->post('is_new')=="on"?"true":"false");
-            $this->db->set('is_populer', $this->input->post('is_populer')=="on"?"true":"false");
+
+            $this->db->set('is_sale', $this->input->post('is_sale') == "on" ? "true" : "false");
+            $this->db->set('is_new', $this->input->post('is_new') == "on" ? "true" : "false");
+            $this->db->set('is_populer', $this->input->post('is_populer') == "on" ? "true" : "false");
 
             $this->db->set('home_slider', $this->input->post('home_slider'));
             $this->db->set('home_bottom', $this->input->post('home_bottom'));
@@ -638,14 +638,13 @@ class ProductManager extends CI_Controller {
 
         $this->load->view('productManager/productReport', $data);
     }
-    
-    
-      function setProductColors() {
+
+    function setProductColors() {
         $product_id = $this->input->get('product_id');
-        $attrid =  $this->input->get('attr_id');
-        $attrval =  $this->input->get('id');
-        
-        $this->db->delete('product_attribute', array('product_id' => $product_id, "attribute_id"=>$attrid));
+        $attrid = $this->input->get('attr_id');
+        $attrval = $this->input->get('id');
+
+        $this->db->delete('product_attribute', array('product_id' => $product_id, "attribute_id" => $attrid));
         $productattr = array(
             'product_id' => $product_id,
             'attribute_id' => $attrid,
@@ -692,7 +691,6 @@ class ProductManager extends CI_Controller {
                 $imageurl = product_image_base . str_replace("folder", $pvalue['folder'], $product_folders[0]);
             }
             $product_id = $pvalue["id"];
-
 
             $temparray['image'] = "<img src='$imageurl' id='img_$product_id'  data-toggle='modal' data-target='#imageZoomModel' onclick=zoomImage('img_" . $pvalue["id"] . "') style='height:51px;'>";
             $temparray['sku'] = $pvalue['sku'];
@@ -803,7 +801,8 @@ class ProductManager extends CI_Controller {
         } else {
             $category_id = 0;
         }
-        $categoriesString = $this->Product_model->stringCategories($category_id) . ", " . $category_id;
+        $precategories = $this->Product_model->stringCategories($category_id);
+        $categoriesString = $precategories ? $precategories . ", " . $category_id : $category_id;
         $categoriesString = ltrim($categoriesString, ", ");
         $sqldata = "select *, 'false' as checked from products where category_id in ($categoriesString) and status =1 order by display_index desc";
         $query = $this->db->query($sqldata);
