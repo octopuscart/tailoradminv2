@@ -25,7 +25,7 @@ class Services extends CI_Controller {
     }
 
     function order_mail_send($order_id) {
-        $subject = "Order Confirmation - Your Order with www.bespoketailorshk.com [$order_id] has been successfully placed!";
+        $subject = "Order Confirmation - Your Order with www.rahmanfashions.com [$order_id] has been successfully placed!";
         $this->Order_model->order_mail($order_id, $subject);
     }
 

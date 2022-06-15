@@ -69,6 +69,19 @@ $this->load->view('layout/layoutTop');
 <!-- end col-6 -->
 </div>
 
+<div class="modal fade" id="imageZoomModel" tabindex="-1" role="dialog" aria-labelledby="attributeModel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+                <div class="modal-body" id="showimageproduct">
+                    <img src="" id="showimageproduct_src" width="100%"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="attributeModel" tabindex="-1" role="dialog" aria-labelledby="attributeModel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -78,10 +91,26 @@ $this->load->view('layout/layoutTop');
                     <h4 class="modal-title" id="myModalLabel">Add/Change Color</h4>
                 </div>
                 <div class="modal-body">
-                    
+                    <li class='list-group-item'>
+                        <?php echo $attr; ?> 
+
+                        <select  name='attr_value' id="attr_value" class='form-control' style="margin-top: 10px;">
+                            <option value="" selected="">Select Color</option>
+                            <?php
+                            foreach ($attribuites as $key => $value) {
+                                $atv = $value['attribute_value'];
+                                $atid = $value['attribute_id'];
+                                $attav = $value['additional_value'];
+                                $atvid = $value['id'];
+                                $preatter = $product_attributes[$atid]['attribute_value_id'] == $atvid ? 'selected' : '';
+                                echo "<option value='$atvid' $preatter style='background:$attav'>$atv</option>";
+                            }
+                            ?>
+                        </select>
+                    </li>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="save_attr" value="save_attr" class="btn btn-primary">Save</button>
+                    <button type="button" name="save_attr" id="save_attr_product_list" onclick="selectcolor()" class="btn btn-primary" data-dismiss="modal">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -93,7 +122,58 @@ $this->load->view('layout/layoutTop');
 $this->load->view('layout/layoutFooter');
 ?> 
 <script>
+    var selectedcolor;
+    var iscolorselect = false;
+    var selectedcolorid;
+
+    function selecteddiv(selectedid) {
+        selectedcolorid = (selectedid);
+    }
+   function zoomImage(imgid){
+       console.log($("#"+imgid).html())
+        $("#showimageproduct_src").attr("src", $("#"+imgid).attr("src"));
+    }
+    function selectcolor() {
+        if (iscolorselect) {
+            console.log(selectedcolor);
+            selectedcolor["product_id"] = selectedcolorid;
+            var innterhtml = '<span class="colorbox" title="Dark Blue" style="background:' + selectedcolor.color_code + '">' + selectedcolor.color_name + '</span>';
+            var buttonhtml = "<button class= 'btn btn-default btn-xs btn-block' data-toggle='modal' data-target='#attributeModel' onclick=selecteddiv('" + selectedcolorid + "')>Add/Change</button>";
+            $.get("<?php echo $set_color_api;?>", selectedcolor, function (r, v) {
+                console.log("color inserted");                                     
+            });
+            $("#" + selectedcolorid).html(innterhtml + buttonhtml);
+        } else {
+            console.log("selected none");
+        }
+    }
+
     $(function () {
+        var colorlist = [];
+<?php
+$colorlistarray = array();
+foreach ($attribuites as $key => $value) {
+    $atv = $value['attribute_value'];
+    $atid = $value['attribute_id'];
+    $attav = $value['additional_value'];
+    $color_id = $value["id"];
+    $colorele = array("color_code" => $attav, "color_name" => $atv, "id" => $color_id, "attr_id" => $atid);
+    $colorlistarray[$color_id] = $colorele;
+}
+echo "var colorlist=" . json_encode($colorlistarray);
+?>
+
+        $("#attr_value").on("change", function () {
+            if (this.value) {
+                iscolorselect = true;
+                selectedcolor = colorlist[this.value];
+            } else {
+                iscolorselect = false;
+            }
+
+        });
+
+
 
         $('#tableData').DataTable({
             "processing": true,

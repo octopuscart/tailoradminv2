@@ -89,13 +89,11 @@ class ProductManager extends CI_Controller {
 
         $data['category_items'] = $this->Product_model->category_items_prices();
 
-
         $query = $this->db->get('custome_items');
         $data['custome_items'] = $query->result();
 
         $query = $this->db->get('custome_items_price');
         $data['custome_items_price'] = $query->result();
-
 
         if (isset($_POST['delete_category'])) {
             $this->db->where('id', $this->input->post('category_id'));
@@ -152,9 +150,6 @@ class ProductManager extends CI_Controller {
                 }
                 redirect('ProductManager/categoryItems');
 
-
-
-
 //                $category_array = array(
 //                    'category_name' => $this->input->post('category_name'),
 //                    'description' => $this->input->post('description'),
@@ -198,7 +193,7 @@ class ProductManager extends CI_Controller {
     }
 
     //Attribute Command
-    function attributeCategoryListComman($category_id=0, $categorystr=array("category_string"=>"")) {
+    function attributeCategoryListComman($category_id = 0, $categorystr = array("category_string" => "")) {
 
         $categorylistattr = array();
 
@@ -376,7 +371,6 @@ class ProductManager extends CI_Controller {
 
         $data['category_prices'] = $product_model->category_items_prices();
 
-
         $this->db->select('*');
         $this->db->where('id', $product_id);
         $query = $this->db->get('products');
@@ -391,7 +385,6 @@ class ProductManager extends CI_Controller {
 
         $data['product_prices'] = $product_model->category_items_prices_id($productobj->category_items_id);
 
-
         if ($productobj->variant_product_of) {
             $vproduct_id = $productobj->variant_product_of;
         }
@@ -403,14 +396,12 @@ class ProductManager extends CI_Controller {
         $product_result_variant = $query->result();
         $data['variant_products'] = $product_result_variant;
 
-
         $category_id = $productobj->category_id;
         $product_query = "select pt.id as product_id,sku, pt.short_description, pt.title, pt.sale_price, pt.regular_price, pt.price, pt.file_name 
             from products as pt where pt.category_id in ($category_id) and pt.id !=$product_id and pt.id not in (select related_product_id from product_related where product_id = $product_id) and variant_product_of=0 ";
         $query = $this->db->query($product_query);
         $product_result_related = $query->result();
         $data['related_products_check'] = $product_result_related;
-
 
         $category_id = $productobj->category_id;
         $product_query = "select pr.id as related_product_id, pt.id as product_id,sku, pt.short_description, pt.title, pt.sale_price, pt.regular_price, pt.price, pt.file_name 
@@ -419,7 +410,6 @@ class ProductManager extends CI_Controller {
         $query = $this->db->query($product_query);
         $product_result_related = $query->result();
         $data['related_products'] = $product_result_related;
-
 
         $this->db->select('id, category_name');
         $query = $this->db->get('category');
@@ -576,8 +566,6 @@ class ProductManager extends CI_Controller {
             $this->db->set('keywords', $this->input->post('keywords'));
             $this->db->set('video_link', $this->input->post('video_link'));
 
-
-
             $this->db->set('home_slider', $this->input->post('home_slider'));
             $this->db->set('home_bottom', $this->input->post('home_bottom'));
 
@@ -641,9 +629,27 @@ class ProductManager extends CI_Controller {
     function productReport() {
         $product_model = $this->Product_model;
         $data['product_model'] = $product_model;
-
+        $data['attribuites'] = $product_model->category_attribute_list(47);
+        $data["set_color_api"] = site_url("ProductManager/setProductColors");
 
         $this->load->view('productManager/productReport', $data);
+    }
+    
+    
+      function setProductColors() {
+        $product_id = $this->input->get('product_id');
+        $attrid =  $this->input->get('attr_id');
+        $attrval =  $this->input->get('id');
+        
+        $this->db->delete('product_attribute', array('product_id' => $product_id, "attribute_id"=>$attrid));
+        $productattr = array(
+            'product_id' => $product_id,
+            'attribute_id' => $attrid,
+            'attribute' => "Colors",
+            'attribute_value_id' => $attrval
+        );
+        $this->db->insert('product_attribute', $productattr);
+        $this->response($productattr);
     }
 
     //Product API for data Table
@@ -671,9 +677,6 @@ class ProductManager extends CI_Controller {
         $query2 = $this->db->query($query);
         $productslist = $query2->result_array();
 
-
-
-
         $return_array = array();
         foreach ($productslist as $pkey => $pvalue) {
             $temparray = array();
@@ -684,9 +687,10 @@ class ProductManager extends CI_Controller {
             if (count($product_folders)) {
                 $imageurl = product_image_base . str_replace("folder", $pvalue['folder'], $product_folders[0]);
             }
+            $product_id = $pvalue["id"];
 
 
-            $temparray['image'] = "<img src='$imageurl' style='height:51px;'>";
+            $temparray['image'] = "<img src='$imageurl' id='img_$product_id'  data-toggle='modal' data-target='#imageZoomModel' onclick=zoomImage('img_" . $pvalue["id"] . "') style='height:51px;'>";
             $temparray['sku'] = $pvalue['sku'];
             $temparray['title'] = $pvalue['title'];
 
@@ -698,15 +702,14 @@ class ProductManager extends CI_Controller {
             $itemsprice = $this->Product_model->category_items_prices_id($pvalue['category_items_id']);
 
             $productattr = $this->Product_model->productAttributes($pvalue['id']);
-            $colorbutton = "<button class='btn btn-default btn-xs btn-block'>Add/Change</button>";
-            $temparray['color'] = "$colorbutton";
-            if (count($productattr?$productattr:array())) {
-                $temparray['color'] = "<span class='colorbox' title='" . $productattr[0]['attribute_value'] . "' style='background:" . $productattr[0]['additional_value'] . "'>" . $productattr[0]['attribute_value'] . "</span><br/>$colorbutton";
+            $colorbutton = "<button class= 'btn btn-default btn-xs btn-block' data-toggle='modal' data-target='#attributeModel' onclick=selecteddiv('" . $pvalue["id"] . "')>Add/Change</button>";
+            $temparray['color'] = "<div id='" . $pvalue["id"] . "'>$colorbutton</div>";
+            if (count($productattr ? $productattr : array())) {
+                $temparray['color'] = "<div id='" . $pvalue["id"] . "'><span class='colorbox' title='" . $productattr[0]['attribute_value'] . "' style='background:" . $productattr[0]['additional_value'] . "'>" . $productattr[0]['attribute_value'] . "</span><br/>$colorbutton</div>";
             }
 
 
             $pricetable = '<table class="sub_item_table">';
-
 
             foreach ($itemsprice as $iikey => $iivalue) {
 
@@ -763,7 +766,6 @@ class ProductManager extends CI_Controller {
                 'link' => $this->input->post('link'),
                 'link_text' => $this->input->post('link_text'),
                 'file_name' => $file_newname);
-
 
             $this->db->insert('sliders', $post_data);
             $last_id = $this->db->insert_id();
