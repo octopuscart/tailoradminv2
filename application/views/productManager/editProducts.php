@@ -97,349 +97,326 @@ $session_data = $this->session->userdata('logged_in');
 
                             <div class="tab-pane active" id="tab_0">
                                 <div class="row">
-
                                     <div class="col-md-6">
-                                        <?php
-                                        $product_folders = explode(", ", product_folders);
-                                        $imageurl = "";
-                                        if (count($product_folders)) {
-                                            $imageurl = product_image_base . str_replace("folder", $product_obj->folder, $product_folders[0]);
-                                        }
-                                        ?>
+                                        <img class="" src="<?php echo product_image_base; ?>/thumb/<?php echo $product_obj->folder; ?>/fabric20001.png" style='width: 100%'/>
+                                    </div>  
+                                
 
-                                        <div class="product_image product_image_back_slider" style="background: url(<?php echo ($imageurl); ?>)"  style="height:400px!important">
-                                        </div>  
-                                        <div class="tab-content">
-                                            <img class="custom_images" src="<?php echo product_image_base; ?>/shirt/output/<?php echo $product_obj->folder; ?>/shirt_model10001.png">
-                                            <img class="custom_images" src="<?php echo product_image_base; ?>/jacket/output/<?php echo $product_obj->folder; ?>/s1_master_style60001.png"/>
-                                            <img class="custom_images" src="<?php echo product_image_base; ?>/jacket/output/<?php echo $product_obj->folder; ?>/pant_style10001.png"/>
-                                            <img class="custom_images" src="<?php echo product_image_base; ?>/jacket/output/<?php echo $product_obj->folder; ?>/style_buttons.png"/>
-                                            <img class="custom_images" src="<?php echo product_image_base; ?>/jacket/output/<?php echo $product_obj->folder; ?>/fabric20001.png"/>
-                                            <div style="clear: both"></div>
-                                        </div>
-
-
-
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <h3><?php echo $product_obj->title; ?>  <small>(<?php echo $product_obj->sku; ?>)</small></h3>
-
-                                        <p><?php echo $product_obj->short_description; ?></p>
-                                        <h4>    <small>Prices:</small></h4>
-                                        <table class='table'>
-                                            <?php
-                                            foreach ($product_prices as $ppkey => $ppvalue) {
-                                                echo "<tr><th>", $ppvalue->item_name, "</td><td>", $ppvalue->price, "</td></tr>";
-                                            }
-                                            ?>
-
-                                        </table>
-                                        <?php
-                                        if (count($product_detail_attrs)) {
-                                            foreach ($product_detail_attrs as $key => $value) {
-                                                ?>
-                                                <li style="margin: 5px"><span class="attrkey">
-                                                        <?php echo $value['attribute']; ?>
-                                                    </span>
-                                                    <span class="attrval">
-                                                        <?php echo $value['attribute_value']; ?>
-                                                    </span>
-                                                </li>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                        <h4><small>Stock Status: </small> <?php echo $product_obj->stock_status; ?></h4>
-
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-
-                            <div class="tab-pane " id="tab_1">
-                                <div class='row'>
-                                    <div class='col-md-6'>
-                                        <div class="form-group">
-                                            <label >SKU</label>
-                                            <input type="text" class="form-control" name="sku" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->sku; ?>">
-                                        </div>
-                                    </div>
-                                    <div class='col-md-6'>
-                                        <div class="form-group">
-                                            <label >Title</label>
-                                            <input type="text" class="form-control" name="title" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->title; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label >Short Description</label>
-                                    <input type="text" class="form-control" name="short_description" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->short_description; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label >Category         </label><br/>
-                                    <span class='categorystring'>{{selectedCategory.category_string}}</span>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".categoryopen" style="margin-left: 21px;">Select Category</button>
-                                    <input type="hidden" name="category_name" id="category_id" value="<?php echo $product_obj->category_id; ?>">
-                                </div>
-
-                            </div>
-
-
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tab_2">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Description</label>
-                                    <textarea class="form-control"  name="description" style="height:250px" ><?php echo $product_obj->description; ?></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Video Link</label>
-                                    <input type="text" class="form-control price_tag_text" id='regular_price' name="video_link" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->video_link; ?>">
-                                </div>
-                            </div>
-
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tab_3">
-                                <!--pictures-->
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="thumbnail">
-                                            <div class="product_image product_image_back" style="background: url(<?php echo ($product_obj->file_name ? base_url() . "assets_main/productimages/" . $product_obj->file_name : base_url() . "assets_main/" . default_image); ?>)">
-                                            </div>
-                                            <div class="caption">
-                                                <div class="form-group">
-                                                    <label for="image1">Upload Primary Image</label>
-                                                    <input type="file" name="picture" />           
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">                           
-                                        <div class="thumbnail" >
-                                            <div class="product_image product_image_back" style="background: url(<?php echo ($product_obj->file_name1 ? base_url() . "assets_main/productimages/" . $product_obj->file_name1 : base_url() . "assets_main/" . default_image); ?>)">
-                                            </div>               
-                                            <div class="caption">
-                                                <div class="form-group">
-                                                    <label for="image1">Upload Image 1</label>
-                                                    <input type="file" name="picture1" />           
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">                           
-                                        <div class="thumbnail" >
-                                            <div class="product_image product_image_back" style="background: url(<?php echo ($product_obj->file_name2 ? base_url() . "assets_main/productimages/" . $product_obj->file_name2 : base_url() . "assets_main/" . default_image); ?>)">
-                                            </div>               
-                                            <div class="caption">
-                                                <div class="form-group">
-                                                    <label for="image1">Upload Image 2</label>
-                                                    <input type="file" name="picture2" />           
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--pictures-->
-                            </div>
-
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tab_4">
-                                <div class="row">
-
-
-                                    <div class="col-md-6">
-<!--                                        <table class='table'>
+                                <div class="col-md-6">
+                                    <h3><?php echo $product_obj->title; ?>  <small>(<?php echo $product_obj->sku; ?>)</small></h3>
+                                    <p><?php echo $product_obj->short_description; ?></p>
+                                    <h4>    <small>Prices:</small></h4>
+                                    <table class='table'>
                                         <?php
                                         foreach ($product_prices as $ppkey => $ppvalue) {
                                             echo "<tr><th>", $ppvalue->item_name, "</td><td>", $ppvalue->price, "</td></tr>";
                                         }
                                         ?>
-                                        </table>-->
-
-
-
-
-                                        <div class="box box-primary">
-                                            <div class="box-header with-border">
-                                                <h3 class="box-title">Change Price Group</h3>
-                                            </div>
-                                            <div class="box-body">
-
-
-                                                <table class='table' style='    font-size: 17px;'>
-                                                    <?php
-                                                    foreach ($category_prices as $key => $value) {
-                                                        ?>
-                                                        <tr class="item_headers items_row">
-                                                            <th colspan="3">
-
-
-                                                                <label>
-                                                                    <input type="radio" name='category_items_id' <?php echo $product_obj->category_items_id == $value->id?'checked':'';?> value='<?php echo $value->id; ?>'> <?php echo $value->category_name; ?>
-                                                                </label>
-
-                                                            </th>
-
-                                                        </tr>
-                                                        <?php
-                                                        $category_prices = $value->prices;
-                                                        if ($category_prices) {
-                                                            foreach ($category_prices as $ckey => $cvalue) {
-                                                                ?>
-                                                                <tr class='items_row'>
-                                                                    <td> <?php echo $cvalue->item_name; ?></td>
-                                                                    <td><?php echo $cvalue->price; ?></td>
-
-                                                                </tr>
-                                                                <?php
-                                                            }
-                                                        } else {
-                                                            echo "<tr><td class='colspan4'>----</td></tr>";
-                                                        }
-                                                        ?>
-
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label >Product Availabilities: <?php echo $product_obj->stock_status; ?></label>
-                                            <select  name='stock_status' class='form-control'>
-                                                <option value='In Stock' <?php echo ($product_obj->stock_status == 'In of Stock' ? 'selected' : ''); ?> >In Stock</option>
-                                                <option value='Out of Stock' <?php echo ($product_obj->stock_status == 'Out of Stock' ? 'selected' : ''); ?> >Out of Stock</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
+                                    </table>
+                                    <?php
+                                    if (count($product_detail_attrs)) {
+                                        foreach ($product_detail_attrs as $key => $value) {
+                                            ?>
+                                            <li style="margin: 5px"><span class="attrkey">
+                                                    <?php echo $value['attribute']; ?>
+                                                </span>
+                                                <span class="attrval">
+                                                    <?php echo $value['attribute_value']; ?>
+                                                </span>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                    <h4><small>Stock Status: </small> <?php echo $product_obj->stock_status; ?></h4>
 
                                 </div>
                             </div>
-                            <!-- /.tab-pane -->
 
 
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tab_5">
-                                <!--product availabilities-->
-                                <div class='row'>
+                        </div>
+
+
+                        <div class="tab-pane " id="tab_1">
+                            <div class='row'>
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label >SKU</label>
+                                        <input type="text" class="form-control" name="sku" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->sku; ?>">
+                                    </div>
+                                </div>
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label >Title</label>
+                                        <input type="text" class="form-control" name="title" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->title; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label >Short Description</label>
+                                <input type="text" class="form-control" name="short_description" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->short_description; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label >Category         </label><br/>
+                                <span class='categorystring'>{{selectedCategory.category_string}}</span>
+                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".categoryopen" style="margin-left: 21px;">Select Category</button>
+                                <input type="hidden" name="category_name" id="category_id" value="<?php echo $product_obj->category_id; ?>">
+                            </div>
+
+                        </div>
+
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Description</label>
+                                <textarea class="form-control"  name="description" style="height:250px" ><?php echo $product_obj->description; ?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Video Link</label>
+                                <input type="text" class="form-control price_tag_text" id='regular_price' name="video_link" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->video_link; ?>">
+                            </div>
+                        </div>
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_3">
+                            <!--pictures-->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="thumbnail">
+                                        <div class="product_image product_image_back" style="background: url(<?php echo ($product_obj->file_name ? base_url() . "assets_main/productimages/" . $product_obj->file_name : base_url() . "assets_main/" . default_image); ?>)">
+                                        </div>
+                                        <div class="caption">
+                                            <div class="form-group">
+                                                <label for="image1">Upload Primary Image</label>
+                                                <input type="file" name="picture" />           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">                           
+                                    <div class="thumbnail" >
+                                        <div class="product_image product_image_back" style="background: url(<?php echo ($product_obj->file_name1 ? base_url() . "assets_main/productimages/" . $product_obj->file_name1 : base_url() . "assets_main/" . default_image); ?>)">
+                                        </div>               
+                                        <div class="caption">
+                                            <div class="form-group">
+                                                <label for="image1">Upload Image 1</label>
+                                                <input type="file" name="picture1" />           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">                           
+                                    <div class="thumbnail" >
+                                        <div class="product_image product_image_back" style="background: url(<?php echo ($product_obj->file_name2 ? base_url() . "assets_main/productimages/" . $product_obj->file_name2 : base_url() . "assets_main/" . default_image); ?>)">
+                                        </div>               
+                                        <div class="caption">
+                                            <div class="form-group">
+                                                <label for="image1">Upload Image 2</label>
+                                                <input type="file" name="picture2" />           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--pictures-->
+                        </div>
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_4">
+                            <div class="row">
+
+
+                                <div class="col-md-6">
+<!--                                        <table class='table'>
+                                    <?php
+                                    foreach ($product_prices as $ppkey => $ppvalue) {
+                                        echo "<tr><th>", $ppvalue->item_name, "</td><td>", $ppvalue->price, "</td></tr>";
+                                    }
+                                    ?>
+                                    </table>-->
+
+
+
+
+                                    <div class="box box-primary">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Change Price Group</h3>
+                                        </div>
+                                        <div class="box-body">
+
+
+                                            <table class='table' style='    font-size: 17px;'>
+                                                <?php
+                                                foreach ($category_prices as $key => $value) {
+                                                    ?>
+                                                    <tr class="item_headers items_row">
+                                                        <th colspan="3">
+
+
+                                                            <label>
+                                                                <input type="radio" name='category_items_id' <?php echo $product_obj->category_items_id == $value->id ? 'checked' : ''; ?> value='<?php echo $value->id; ?>'> <?php echo $value->category_name; ?>
+                                                            </label>
+
+                                                        </th>
+
+                                                    </tr>
+                                                    <?php
+                                                    $category_prices = $value->prices;
+                                                    if ($category_prices) {
+                                                        foreach ($category_prices as $ckey => $cvalue) {
+                                                            ?>
+                                                            <tr class='items_row'>
+                                                                <td> <?php echo $cvalue->item_name; ?></td>
+                                                                <td><?php echo $cvalue->price; ?></td>
+
+                                                            </tr>
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                        echo "<tr><td class='colspan4'>----</td></tr>";
+                                                    }
+                                                    ?>
+
+                                                    <?php
+                                                }
+                                                ?>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >Product Availabilities: <?php echo $product_obj->stock_status; ?></label>
+                                        <select  name='stock_status' class='form-control'>
+                                            <option value='In Stock' <?php echo ($product_obj->stock_status == 'In of Stock' ? 'selected' : ''); ?> >In Stock</option>
+                                            <option value='Out of Stock' <?php echo ($product_obj->stock_status == 'Out of Stock' ? 'selected' : ''); ?> >Out of Stock</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_5">
+                            <!--product availabilities-->
+                            <div class='row'>
+                                <div class="col-md-6" style="margin-top: 20px;">
+
+                                    <ul class="list-group">
+                                        <div class="form-group">
+                                            <label >Product Keywords For SEO and Searching (Should Separated By ',')</label>
+                                            <input type="text" class="form-control" name="keywords" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->keywords; ?>">
+                                        </div>
+
+                                        <?php
+                                        foreach ($category_attribute as $key => $value) {
+                                            $atid = $value->id;
+                                            $attr = $value->attribute;
+                                            $attribuites = $product_model->category_attribute_list($atid);
+
+                                            if ($value->widget == 'color') {
+                                                ?>
+
+                                                <li class='list-group-item'>
+                                                    <?php echo $attr; ?> 
+                                                    <input type="hidden" name="attr_name[]" value="<?php echo $attr; ?>">
+                                                    <input type="hidden" name="attr_id[]" value="<?php echo $atid; ?>">
+                                                    <button type="button" class="btn btn-success btn-xs" style="margin-left: 10px" ng-click="addAttribute('<?php echo $atid; ?>', '<?php echo $attr; ?>')" data-toggle="modal" data-target="#attributeModel">Add New</button>
+
+                                                    <select  name='attr_value[]' class='form-control' style="margin-top: 10px;">
+                                                        <?php
+                                                        foreach ($attribuites as $key => $value) {
+                                                            $atv = $value['attribute_value'];
+                                                            $atid = $value['attribute_id'];
+                                                            $attav = $value['additional_value'];
+                                                            $atvid = $value['id'];
+                                                            $preatter = $product_attributes[$atid]['attribute_value_id'] == $atvid ? 'selected' : '';
+                                                            echo "<option value='$atvid' $preatter style='background:$attav'>$atv</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </li>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+
+                                <?php if ($session_data['user_type'] == 'Admin') { ?>
+
                                     <div class="col-md-6" style="margin-top: 20px;">
 
                                         <ul class="list-group">
-                                            <div class="form-group">
-                                                <label >Product Keywords For SEO and Searching (Should Separated By ',')</label>
-                                                <input type="text" class="form-control" name="keywords" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php echo $product_obj->keywords; ?>">
+
+                                            <div class="checkbox">
+                                                <label style="font-size: 20px;line-height: 31px;">
+                                                    <input type="checkbox" class="checkboxproduct" name="home_slider" <?php echo $product_obj->home_slider == "on" ? "checked" : ""; ?>> Show in Home Slider
+                                                </label>
+                                            </div>
+                                            <hr/>
+                                            <div class="checkbox">
+                                                <label style="font-size: 20px;line-height: 31px;">
+                                                    <input type="checkbox" class="checkboxproduct" name="home_bottom" <?php echo $product_obj->home_bottom == "on" ? "checked" : ""; ?>> Show in Home Bottom
+                                                </label>
                                             </div>
 
-                                            <?php
-                                          
-                                            foreach ($category_attribute as $key => $value) {
-                                                $atid = $value->id;
-                                                $attr = $value->attribute;
-                                                $attribuites = $product_model->category_attribute_list($atid);
-                                                
-                                                if ($value->widget == 'color') {
-                                                    ?>
 
-                                                    <li class='list-group-item'>
-                                                        <?php echo $attr; ?> 
-                                                        <input type="hidden" name="attr_name[]" value="<?php echo $attr; ?>">
-                                                        <input type="hidden" name="attr_id[]" value="<?php echo $atid; ?>">
-                                                        <button type="button" class="btn btn-success btn-xs" style="margin-left: 10px" ng-click="addAttribute('<?php echo $atid; ?>', '<?php echo $attr; ?>')" data-toggle="modal" data-target="#attributeModel">Add New</button>
-
-                                                        <select  name='attr_value[]' class='form-control' style="margin-top: 10px;">
-                                                            <?php
-                                                            foreach ($attribuites as $key => $value) {
-                                                                $atv = $value['attribute_value'];
-                                                                $atid = $value['attribute_id'];
-                                                                $attav = $value['additional_value'];
-                                                                $atvid = $value['id'];
-                                                                $preatter = $product_attributes[$atid]['attribute_value_id'] == $atvid ? 'selected' : '';
-                                                                echo "<option value='$atvid' $preatter style='background:$attav'>$atv</option>";
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </li>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
                                         </ul>
                                     </div>
-
-                                    <?php if ($session_data['user_type'] == 'Admin') { ?>
-
-                                        <div class="col-md-6" style="margin-top: 20px;">
-
-                                            <ul class="list-group">
-
-                                                <div class="checkbox">
-                                                    <label style="font-size: 20px;line-height: 31px;">
-                                                        <input type="checkbox" class="checkboxproduct" name="home_slider" <?php echo $product_obj->home_slider == "on" ? "checked" : ""; ?>> Show in Home Slider
-                                                    </label>
-                                                </div>
-                                                <hr/>
-                                                <div class="checkbox">
-                                                    <label style="font-size: 20px;line-height: 31px;">
-                                                        <input type="checkbox" class="checkboxproduct" name="home_bottom" <?php echo $product_obj->home_bottom == "on" ? "checked" : ""; ?>> Show in Home Bottom
-                                                    </label>
-                                                </div>
+                                    <?php
+                                }
+                                ?>
 
 
-                                            </ul>
-                                        </div>
-                                        <?php
-                                    }
-                                    ?>
-
-
-                                </div>
                             </div>
-                            <!-- /.tab-pane -->
                         </div>
-                        <!-- /.tab-content -->
+                        <!-- /.tab-pane -->
                     </div>
-
-                    <button type="submit" name="editdata" class="btn btn-primary btn-lg">Submit</button>
-                </form>
-
+                    <!-- /.tab-content -->
             </div>
 
+            <button type="submit" name="editdata" class="btn btn-primary btn-lg">Submit</button>
+            </form>
 
         </div>
+
+
     </div>
+</div>
 
 
-    <!--veriant products-->
-    <!--    <div class="box box-danger">
-            <div class="box-header">
-                <h3 class="box-title">
-                    Products Variant
-    <?php
-    if (!$product_obj->variant_product_of) {
-        ?>
+<!--veriant products-->
+<!--    <div class="box box-danger">
+        <div class="box-header">
+            <h3 class="box-title">
+                Products Variant
+<?php
+if (!$product_obj->variant_product_of) {
+    ?>
                                                                                     <a class="btn btn-success" href="<?php echo site_url('ProductManager/variant_product/' . $product_obj->id); ?>" style="margin-left: 50px"><i class="fa fa-plus"></i> Add New</a>
-        <?php
-    }
-    ?>
     <?php
-    if ($product_obj->variant_product_of) {
-        ?>
+}
+?>
+<?php
+if ($product_obj->variant_product_of) {
+    ?>
                                                                                     <a class="btn btn-success" href="<?php echo site_url('ProductManager/variant_product/' . $product_obj->variant_product_of); ?>" style="margin-left: 50px"><i class="fa fa-plus"></i> Add New</a>
-        <?php
-    }
-    ?>
-                </h3>
-    
-            </div>
-            <div class="box-body">
-                <div class="row">
     <?php
-    foreach ($variant_products as $key => $value) {
-        ?>
+}
+?>
+            </h3>
+
+        </div>
+        <div class="box-body">
+            <div class="row">
+<?php
+foreach ($variant_products as $key => $value) {
+    ?>
                                                                                     <div class="col-md-3">                           
                                                                                         <div class="thumbnail" >
                                                                                             <div class="product_image product_image_back" style="background: url(<?php echo ($value->file_name ? base_url() . "assets_main/productimages/" . $value->file_name : base_url() . "assets_main/" . default_image); ?>)">
@@ -455,47 +432,47 @@ $session_data = $this->session->userdata('logged_in');
                                                                                                 <h4 style="font-size: 15px">{{<?php echo $value->price | 0; ?>|currency:" "}}</h4>
                                                                                                 <p style="font-size: 12px;"><b>SKU</b>:<?php echo $value->sku; ?></p>
                                                                                                 <P>
-        <?php
-        $attr = $attributefunction->variant_product_attr($value->product_id);
-        foreach ($attr as $key => $value) {
-            ?>
-                                                                                                                                                                <li style="margin: 5px"><span class="attrkey">
-            <?php echo $value['attribute']; ?>
-                                                                                                                                                                    </span>
-                                                                                                                                                                    <span class="attrval">
-            <?php echo $value['attribute_value']; ?>
-                                                                                                                                                                    </span>
-                                                                                                                                                                </li>
-            <?php
-        }
+    <?php
+    $attr = $attributefunction->variant_product_attr($value->product_id);
+    foreach ($attr as $key => $value) {
         ?>
+                                                                                                                                                                    <li style="margin: 5px"><span class="attrkey">
+        <?php echo $value['attribute']; ?>
+                                                                                                                                                                        </span>
+                                                                                                                                                                        <span class="attrval">
+        <?php echo $value['attribute_value']; ?>
+                                                                                                                                                                        </span>
+                                                                                                                                                                    </li>
+        <?php
+    }
+    ?>
                                                                                                 </P>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-    <?php }
-    ?>
-                </div>
+<?php }
+?>
             </div>
-        </div>-->
-    <!--end of verient products-->
+        </div>
+    </div>-->
+<!--end of verient products-->
 
 
-    <?php if ($session_data['user_type'] == 'Admin') { ?>
+<?php if ($session_data['user_type'] == 'Admin') { ?>
 
-        <!--        related products select
-                <div class="box box-danger">
-                    <div class="box-header">
-                        <h3 class="box-title">
-                            Select Related Products
-                        </h3>
-                    </div>
-                    <div class="box-body">
-                        <form action="#" method="post">
-                            <div class="row">
-        <?php
-        foreach ($related_products as $key => $value) {
-            ?>
+    <!--        related products select
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        Select Related Products
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <form action="#" method="post">
+                        <div class="row">
+    <?php
+    foreach ($related_products as $key => $value) {
+        ?>
                                                                                                 <div class="col-md-6 ">
                                                                                                     <div class="panel panel-default">
                                                                                                         <div class="media" style="    padding: 10px;">
@@ -515,29 +492,29 @@ $session_data = $this->session->userdata('logged_in');
                                                                                                 </div>
                                                                     
                                                                     
-        <?php }
-        ?>
-                            </div>
-                            <button class="btn btn-danger" type="submit" name="remove_realted_products">Remove Related Products</button>
-                        </form>
-                    </div>
+    <?php }
+    ?>
+                        </div>
+                        <button class="btn btn-danger" type="submit" name="remove_realted_products">Remove Related Products</button>
+                    </form>
                 </div>
-                end of related products
-        
-        
-                related products select
-                <div class="box box-danger">
-                    <div class="box-header">
-                        <h3 class="box-title">
-                            Select Related Products
-                        </h3>
-                    </div>
-                    <div class="box-body">
-                        <form action="#" method="post">
-                            <div class="row">
-        <?php
-        foreach ($related_products_check as $key => $value) {
-            ?>
+            </div>
+            end of related products
+
+
+            related products select
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        Select Related Products
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <form action="#" method="post">
+                        <div class="row">
+    <?php
+    foreach ($related_products_check as $key => $value) {
+        ?>
                                                                                                 <div class="col-md-6 ">
                                                                                                     <div class="panel panel-default">
                                                                                                         <div class="media" style="    padding: 10px;">
@@ -557,62 +534,62 @@ $session_data = $this->session->userdata('logged_in');
                                                                                                 </div>
                                                                     
                                                                     
-        <?php }
-        ?>
-                            </div>
-                            <button class="btn btn-primary" type="submit" name="add_realted_products">Add Related Products</button>
-                        </form>
-                    </div>
-                </div>
-                end of related products-->
-        <?php
-    }
+    <?php }
     ?>
+                        </div>
+                        <button class="btn btn-primary" type="submit" name="add_realted_products">Add Related Products</button>
+                    </form>
+                </div>
+            </div>
+            end of related products-->
+    <?php
+}
+?>
 
 
 
-    <!-- Modal -->
-    <div class="modal fade categoryopen" id="category_model">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+<!-- Modal -->
+<div class="modal fade categoryopen" id="category_model">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Select Category</h4>
+            </div>
+            <div class="modal-body">
+                <div id="using_json_2" class="demo">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="attributeModel" tabindex="-1" role="dialog" aria-labelledby="attributeModel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <form action="#" method="post">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Select Category</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{attributeSelected.title}}</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="using_json_2" class="demo">
-                    </div>
+                    <input type="text" class="form-control" name="attribute_value" placeholder="Color Name">
+                    <input type="text" class="form-control" name="additional_value" placeholder="Color Code: #000fff">
+                    <input type="hidden" class="form-control" name="attribute_name" ng-model="attributeSelected.title" value="{{attributeSelected.title}}">
+                    <input type="hidden" class="form-control" name="attribute_id" ng-model="attributeSelected.id" value="{{attributeSelected.id}}">
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" name="save_attr" value="save_attr" class="btn btn-primary">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="attributeModel" tabindex="-1" role="dialog" aria-labelledby="attributeModel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <form action="#" method="post">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{{attributeSelected.title}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" class="form-control" name="attribute_value" placeholder="Color Name">
-                        <input type="text" class="form-control" name="additional_value" placeholder="Color Code: #000fff">
-                        <input type="hidden" class="form-control" name="attribute_name" ng-model="attributeSelected.title" value="{{attributeSelected.title}}">
-                        <input type="hidden" class="form-control" name="attribute_id" ng-model="attributeSelected.id" value="{{attributeSelected.id}}">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="save_attr" value="save_attr" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+</div>
 
 
 
@@ -639,14 +616,12 @@ $this->load->view('layout/layoutFooter');
                                         if (rprice > sprice) {
                                             $("#finalprice").text(sprice);
                                             $("#finalprice1").val(sprice);
-                                        }
-                                        else {
+                                        } else {
                                             $("#finalprice").text(rprice);
                                             $("#finalprice1").val(rprice);
                                             $("#sale_price").val(0)
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         $("#finalprice").text(rprice);
                                         $("#finalprice1").val(rprice);
                                         $("#sale_price").val(0)
