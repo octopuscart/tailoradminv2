@@ -64,7 +64,17 @@ class Services extends CI_Controller {
     
      function appointment_report(){
         $data = array();
+        $query = $this->db->get('appointment_list');
+        $appointment_reports = $query->result_array();
+        $data["reports"] = $appointment_reports;
         $this->load->view("Appointment/report", $data);
+    }
+    function appointmentList_report(){
+        $data = array();
+        $query = $this->db->get('appointment_entry');
+        $appointment_reports = $query->result_array();
+        $data["reports"] = $appointment_reports;
+        $this->load->view("Appointment/appointmentlist", $data);
     }
 
 }

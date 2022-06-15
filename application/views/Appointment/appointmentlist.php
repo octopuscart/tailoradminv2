@@ -10,16 +10,15 @@ $this->load->view('layout/layoutTop');
             <div class="panel panel-inverse" data-sortable-id="index-5">
                 <div class="panel-heading">
                     <h4 class="panel-title" style ="font-size:17px; font-weight:500; ">
-                        <i class="fa fa-list"></i>  Appointment Report
+                        <i class="fa fa-list"></i>  Appointment List
                     </h4>
-                    
                     <div class="btn-group btn-group-sm pull-right" >
                         <a class="btn btn-success"  data-toggle="" data-placement="left" title="Download Pdf" href="http://www.nitafashions.com/nitaFashionsAdmin/index.php/Appointment/appointment_pdf" style="margin-top: -25px;"><i class="fa fa-download"></i> </a>
 
                     </div>
-                  
+                    
                 </div>
-                    <div class="box-header with-border">
+                       <div class="box-header with-border">
                     <?php
                     $this->load->view('layout/orderdates');
                     ?>
@@ -30,7 +29,9 @@ $this->load->view('layout/layoutTop');
                             <tr>
                                 <th>SN.</th>
                                 <?php
-                                $reportheader = ["first_name", "no_of_person", "last_name", "email", "contact_no", "hotel", "address", "city_state", "country", "referral", "datetime", "appointment_type", "select_date", "select_time",];
+                                $reportheader = [
+"appointment_type", "aid", "country", "city_state", "hotel", "address", "days", "start_date", "end_date", "contact_no", "date", "from_time", "to_time"
+                                ];
 
                                 foreach ($reportheader as $hkey => $hvalue) {
                                     ?>

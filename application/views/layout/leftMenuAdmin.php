@@ -240,6 +240,11 @@ function checkPermission($session_data) {
                             </a>
                         </li>  
                         <li>
+                            <a href="<?php echo base_url(); ?>index.php/Services/appointmentList_report">
+                                <i class="active fa fa-plus "></i> <span>Schedule List</span>
+                            </a>
+                        </li>  
+                        <li>
                             <a href="<?php echo base_url(); ?>index.php/Services/appointment_report">
                                 <i class="active fa fa-plus "></i> <span>Schedule Report</span>
                             </a>
