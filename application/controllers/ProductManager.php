@@ -565,6 +565,10 @@ class ProductManager extends CI_Controller {
             $this->db->set('stock_status', $this->input->post('stock_status'));
             $this->db->set('keywords', $this->input->post('keywords'));
             $this->db->set('video_link', $this->input->post('video_link'));
+            
+            $this->db->set('is_sale', $this->input->post('is_sale')=="on"?"true":"false");
+            $this->db->set('is_new', $this->input->post('is_new')=="on"?"true":"false");
+            $this->db->set('is_populer', $this->input->post('is_populer')=="on"?"true":"false");
 
             $this->db->set('home_slider', $this->input->post('home_slider'));
             $this->db->set('home_bottom', $this->input->post('home_bottom'));
